@@ -6,6 +6,8 @@
 #define MAX_NAME (128)
 #define MEMORY_DIDNT_ALLOCATE_ERROR (-1)
 
+//Testiranje pusha
+
 struct student_;
 typedef struct student_* StudentP;
 typedef struct student_ {
@@ -234,5 +236,3 @@ int DeleteStudent(StudentP student, char* surname) {
 
 	return EXIT_SUCCESS;
 }
-
-
