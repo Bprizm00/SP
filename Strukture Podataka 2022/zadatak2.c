@@ -29,6 +29,7 @@ int main()
 {	
 	Student Head={.name = {0}, .surname = {0}, .birthYear = 0, .next = NULL};
 	StudentP p = &Head;
+	StudentP found = NULL;
 
 	int choice = 1;
 	char name[MAX_NAME] = { 0 };
@@ -86,7 +87,10 @@ int main()
 			printf("Unesite prezime studenta kojeg trazite\n");
 			scanf(" %s", surname);
 
-			FindBySurname(p, surname);
+			found = (StudentP)malloc(sizeof(Student));
+
+			found = FindBySurname(p, surname);
+			printf("Pronadeni element je roden %d i zove se %s \n", found->birthYear, found->name);
 			break;
 		case 5:
 			printf("Unesite prezime studenta kojeg zelite izbrisati\n");
@@ -149,8 +153,8 @@ int PrependList(StudentP student, char* name, char* surname, int birthYear)
 void PrintList(StudentP student)
 {
 	while (student->next != NULL) {
-		printf(" %s %s %d", student->name, student->surname, student->birthYear);
 		student = student->next;
+		printf(" %s %s %d", student->name, student->surname, student->birthYear);
 	}
 }
 
@@ -179,9 +183,14 @@ int AppendList(StudentP student, char* name, char* surname, int birthYear)
 
 StudentP FindBySurname(StudentP student, char* surname) {
 
-	StudentP foundStudent = student;
+	StudentP foundStudent = student->next;
 
-	while (foundStudent != NULL && (strcmp(foundStudent->surname, surname) == 0))
+	if (!foundStudent) {
+		printf("Lista je prazna\n");
+		return NULL;
+	}
+
+	while (foundStudent != NULL && (strcmp(foundStudent->surname, surname) != 0))
 		foundStudent = foundStudent->next;
 
 
@@ -194,7 +203,7 @@ StudentP FindBefore(StudentP student, char* surname) {
 	student = student->next;
 
 
-	while (student != NULL && (strcmp(student->surname, surname) == 0)) {
+	while (student != NULL && (strcmp(student->surname, surname) != 0)) {
 		prevStudent = prevStudent->next;
 		student = student->next;
 	}
